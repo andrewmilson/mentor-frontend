@@ -1,6 +1,7 @@
 console.log('hey')
 
 angular.module('mentor', [
+  'ngSanitize',
   'ui.router'
 ])
 
@@ -25,19 +26,42 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
     url: '/chat/:menteeId/:mentorId',
     templateUrl: 'views/chat.html',
     controller: 'chatController'
+  })
+  .state('discover', {
+    url: '/discover',
+    templateUrl: 'views/discover.html',
+    controller: 'discoverController'
   });
 }])
 
-.controller('dashboardController', function($scope) {
-  $http.get('/mentors/' + mentor.id)
-  .success(function(contacts) {
+.controller('dashboardController', function($scope, $http) {
+  $http.get(HOST + '/mentors/' + 3)
+  .success(function(mentor) {
+    $scope.mentor = mentor.data;
 
+    console.log($scope.mentor.talking_to);
+
+    $scope.mentor.talking_to.forEach(function(mentorId, index) {
+      $http.get(HOST + '/mentee/' + mentorId)
+      .success(function(mentee) {
+        $scope.mentor.talking_to[index] = mentee;
+      })
+    })
   });
 })
 
-.controller('bioController', function($scope) {
-  $scope.get('/mentors/' + USER_ID)
+.controller('bioController', function($scope, $http) {
+  $http.get(HOST + '/mentors/' + USER_ID)
   .success(function(mentor) {
-    $scope.mentor = mentor;
+    console.log(mentor)
+    $scope.mentor = mentor.data;
+  })
+})
+
+.controller('discoverController', function($scope, $http) {
+  $http.get(HOST + '/mentors')
+  .success(function(mentors) {
+    console.log(mentors);
+    $scope.mentors = mentors.data;
   })
 });

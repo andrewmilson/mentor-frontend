@@ -1,0 +1,18 @@
+<nav>
+  <ul>
+    <li class="nav-right"><a href="/#/"><i class="fa fa-angle-left"></i></a></li>
+    <li><a href="">Find Mentors</a></li>
+  </ul>
+</nav>
+
+<table id="chats">
+    <tr ng-repeat="mentor in mentors">
+    <td>
+      <img ng-src="{{ mentor.picture_url }}" alt="" />
+    </td>
+    <td>
+      <strong>{{ mentor.first_name }} {{ mentor.last_name }}:</strong>
+      {{ mentor.bio | linky }}
+    </td>
+  </tr>
+</table>

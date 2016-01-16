@@ -1,16 +1,16 @@
 <nav>
   <ul>
     <li><a href="#/bio">Bio</a></li>
-    <li><a href="#/">Discover</a></li>
+    <li><a href="#/discover">Discover</a></li>
   </ul>
 </nav>
 <table id="chats">
-  <tr ng-repeat="contact in contacts">
+  <tr ng-repeat="talkingTo in mentor.talking_to">
     <td>
       <img src="img/yow.jpg" alt="" />
     </td>
     <td>
-      <strong>Anon:</strong> My last message was this lololololololol
+      <strong>{{ talkingTo }}:</strong> My last message was this lololololololol
     </td>
   </tr>
 </table>

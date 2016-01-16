@@ -18,6 +18,16 @@ nav {
   height: 55px;
 }
 
+.nav-right {
+  color: #fff;
+  font-size: 2em;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 60px;
+}
+
 nav ul {
   padding: 0;
   margin: 0;
@@ -60,6 +70,7 @@ nav ul li a {
 
 #chats img {
   height: 3em;
+  width: 3em;
   border-radius: 50%;
 }
 
