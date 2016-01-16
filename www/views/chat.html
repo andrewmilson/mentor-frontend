@@ -1,6 +1,17 @@
-<div id="chat">
+<nav>
   <ul>
     <li><a href="#/bio">Bio</a></li>
     <li><a href="#/discover">Discover</a></li>
   </ul>
+</nav>
+
+<div>
+  <ul>
+    <li ng-repeat="m in messages">
+      {{ m.username }}: {{ m.messsage }}
+    </li>
+  </ul>
+
+  <input type="text" ng-model="message">
+  <button ng-click="sendMessage();">Send</button>
 </div>

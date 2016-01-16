@@ -23,7 +23,7 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
     controller: 'bioController'
   })
   .state('chat', {
-    url: '/chat/:menteeId/:mentorId',
+    url: '/chat/:id',
     templateUrl: 'views/chat.html',
     controller: 'chatController'
   })
@@ -33,6 +33,16 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
     controller: 'discoverController'
   });
 }])
+
+.controller('homeController', function($scope, $http) {
+  $scope.USER_ID = parseInt(prompt("What ID would you like to use?"));
+
+  var route = $scope.USER_ID < 4 ? '/mentors/' : '/mentees/';
+  $http.get(HOST + route + $scope.USER_ID)
+  .success(function(mentor) {
+    $scope.me = mentor.data;
+  });
+})
 
 .controller('dashboardController', function($scope, $http) {
   $http.get(HOST + '/mentors/' + 3)
@@ -51,8 +61,8 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 })
 
 .controller('bioController', function($scope, $http) {
-  var route = USER_ID < 6 ? '/mentors/' : '/mentees/';
-  $http.get(HOST + route + USER_ID)
+  var route = $scope.USER_ID < 4 ? '/mentors/' : '/mentees/';
+  $http.get(HOST + route + $scope.USER_ID)
   .success(function(mentor) {
     console.log(mentor)
     $scope.mentor = mentor.data;
@@ -67,18 +77,27 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
   })
 })
 
-.controller('chatController', function($scope, $http) {
+.controller('chatController', function($scope, $http, $stateParams) {
   $scope.muted = true;
-  $scoep.messages = [];
+  $scope.messages = [];
 
-  var ws = new WebSocket("ws://localhost:8080/chat");
+  console.log(parseInt($stateParams.id));
 
-  ws.onopen = function(a) {
-    console.log(a);
+  var route = parseInt($stateParams.id) < 4 ? '/mentors/' : '/mentees/';
+  console.log(route);
+  // only works if the ID is a mentor :')
+  $http.get(HOST + route + $stateParams.id)
+    .success(function(mentor) {
+      $scope.to = mentor.data;
+    });
+
+  $scope.user = new User($scope.me.username, function(d) {
+    console.log(d);
+    console.log("NEW MESSAGE!");
+    $scope.messages.push(d);
+  });
+
+  $scope.sendMessage = function() {
+    $scope.user.sendMessage($scope.to.username, $scope.message);
   };
-
-  ws.onmessage = function(a) {
-    var msg = a.data;
-    console.log(msg);
-  }
 });

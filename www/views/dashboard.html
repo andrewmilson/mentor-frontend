@@ -7,10 +7,15 @@
 <table id="chats">
   <tr ng-repeat="talkingTo in mentor.talking_to">
     <td>
-        <img ng-src="{{ talkingTo.picture_url }}" alt="" />
+        <a ng-href="#/chat/{{ talkingTo.id}}">
+            <img ng-src="{{ talkingTo.picture_url }}" alt="" />
+        </a>
     </td>
+
     <td>
+        <a ng-href="#/chat/{{ talkingTo.id}}">
         <strong>{{ talkingTo.first_name }} {{ talkingTo.last_name }}:</strong> My last message was this lololololololol
+        </a>
     </td>
   </tr>
 </table>
