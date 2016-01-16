@@ -42,9 +42,9 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
     console.log($scope.mentor.talking_to);
 
     $scope.mentor.talking_to.forEach(function(mentorId, index) {
-      $http.get(HOST + '/mentee/' + mentorId)
+      $http.get(HOST + '/mentees/' + mentorId)
       .success(function(mentee) {
-        $scope.mentor.talking_to[index] = mentee;
+        $scope.mentor.talking_to[index] = mentee.data;
       })
     })
   });

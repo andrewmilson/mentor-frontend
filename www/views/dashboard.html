@@ -7,10 +7,10 @@
 <table id="chats">
   <tr ng-repeat="talkingTo in mentor.talking_to">
     <td>
-      <img src="img/yow.jpg" alt="" />
+        <img ng-src="{{ talkingTo.picture_url }}" alt="" />
     </td>
     <td>
-      <strong>{{ talkingTo }}:</strong> My last message was this lololololololol
+        <strong>{{ talkingTo.first_name }} {{ talkingTo.last_name }}:</strong> My last message was this lololololololol
     </td>
   </tr>
 </table>
