@@ -17,11 +17,11 @@
     <script src="js/app.js"></script>
 
     <script>
-      window.HOST = 'http://192.168.3.184:8080';
+      window.HOST = 'http://0.0.0.0:8080';
       window.USER_ID = 6;//window.prompt('What user?');
     </script>
   </head>
-  <body ng-app="mentor">
+  <body ng-app="mentor" ng-init="USER_ID = 6">
     <div ui-view id="view"></div>
   </body>
 </html>

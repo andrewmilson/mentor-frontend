@@ -51,7 +51,8 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 })
 
 .controller('bioController', function($scope, $http) {
-  $http.get(HOST + '/mentors/' + USER_ID)
+  var route = USER_ID < 6 ? '/mentors/' : '/mentees/';
+  $http.get(HOST + route + USER_ID)
   .success(function(mentor) {
     console.log(mentor)
     $scope.mentor = mentor.data;
@@ -64,4 +65,20 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
     console.log(mentors);
     $scope.mentors = mentors.data;
   })
+})
+
+.controller('chatController', function($scope, $http) {
+  $scope.muted = true;
+  $scoep.messages = [];
+
+  var ws = new WebSocket("ws://localhost:8080/chat");
+
+  ws.onopen = function(a) {
+    console.log(a);
+  };
+
+  ws.onmessage = function(a) {
+    var msg = a.data;
+    console.log(msg);
+  }
 });
