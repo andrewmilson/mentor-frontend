@@ -18,14 +18,21 @@ nav {
   height: 55px;
 }
 
-.nav-right {
+.nav-right, .nav-left {
   color: #fff;
   font-size: 2em;
   font-weight: bold;
   position: absolute;
-  left: 0;
   height: 100%;
   width: 60px;
+}
+
+.nav-right {
+  left: 0;
+}
+
+.nav-left {
+  right: 0;
 }
 
 nav ul {
