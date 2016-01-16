@@ -1,0 +1,84 @@
+body, html {
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+  font-family: Lato;
+}
+
+body {
+  padding-top: 55px;
+}
+
+nav {
+  position: fixed;
+  background: #6CC470;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 55px;
+}
+
+nav ul {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  list-style: none;
+}
+
+nav ul li {
+  display: inline-block;
+  width: 49%;
+  font-weight: bold;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 1em;
+  line-height: 50px;
+}
+
+#chats {
+  padding: 10px;
+  margin: 0;
+  list-style: none;
+}
+
+#chats tr {
+  padding: 5px;
+}
+
+#chats td {
+  vertical-align: middle;
+}
+
+#chats td:first-child {
+  padding: 0 10px 0 0;
+}
+
+#chats img {
+  height: 3em;
+  border-radius: 50%;
+}
+
+#chats td:last-child {
+  padding: 1em 0 1em 0;
+  border-bottom: 1px solid #ccc;
+  color: #222;
+}
+
+#chats td:last-child strong {
+  color: #222;
+}
+
+#bio {
+  text-align: center;
+  padding: 1em;
+}
+
+#bio img {
+  width: 10em;
+  border-radius: 50%;
+}
