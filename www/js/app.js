@@ -136,6 +136,7 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
       $scope.to = mentor.data;
     });
 
+  console.log($scope.me.username);
   $scope.user = new User($scope.me.username, function(d) {
     console.log(d);
     console.log("NEW MESSAGE!");
@@ -144,6 +145,7 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 
   $scope.sendMessage = function($event) {
     $scope.messages.push($scope.user.sendMessage($scope.to.username, $scope.message));
+    console.log($scope.messages);
     $scope.message = "";
 
     $event.preventDefault();
