@@ -16,13 +16,15 @@ function User(username, present) {
 };
 
 User.prototype.sendMessage = function(to, message) {
-  console.log(to, message);
-
-  this.ws.send(JSON.stringify({
+  var msg = {
     "username": to,
     "message": message,
     "muted": false
-  }));
+  };
+
+  this.ws.send(JSON.stringify(msg));
+
+  return msg;
 };
 
 User.prototype.defaultPresent = function(d) {
