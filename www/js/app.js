@@ -119,7 +119,8 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 
   $scope.sendMessage = function($event) {
     $scope.message = "";
-    $scope.user.sendMessage($scope.to.username, $scope.message);
+    $scope.messages.push($scope.user.sendMessage($scope.to.username, $scope.message));
+
     $event.preventDefault();
   };
 });
