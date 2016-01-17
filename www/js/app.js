@@ -78,6 +78,27 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 })
 
 .controller('chatController', function($scope, $http, $stateParams) {
+  vex.dialog.open({
+    message: 'Do you want your mentor to know who you are when you start the the conversation?',
+    buttons: [
+      $.extend({}, vex.dialog.buttons.YES, {
+        text: 'Yes!'
+      }), $.extend({}, vex.dialog.buttons.NO, {
+        text: 'No.'
+      })
+    ],
+    callback: function(data) {
+      if (data === false) {
+        // User wants to remain anonymous initially
+        
+        return console.log('Cancelled');
+      }
+
+      // User doesn't mind sharing their identity
+      return;
+    }
+  });
+
   $scope.muted = true;
   $scope.messages = [];
 
