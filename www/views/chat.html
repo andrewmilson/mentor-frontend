@@ -7,7 +7,7 @@
 
 <div>
   <ul>
-    <li ng-repeat="m in messages">
+    <li ng-repeat="m in messages" ng-class="{mine: m.id == USER_ID}">
       {{ m.username }}: {{ m.messsage }}
     </li>
   </ul>
@@ -18,7 +18,7 @@
       <span class="fa fa-user"></span>
       Reveal identity
     </a>
-    <input type="text" placeholder="Send a message">
-    <a href="" class="send" ng-click="sendMessage()"><span class="fa fa-send"></span></a>
+    <input type="text" ng-model="message" placeholder="Send a message">
+    <a href="" class="send" ng-click="sendMessage($event)"><span class="fa fa-send"></span></a>
   </div>
 </div>

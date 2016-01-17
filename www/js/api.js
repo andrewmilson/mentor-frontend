@@ -1,5 +1,5 @@
 function User(username, present) {
-  this.ws = new WebSocket("ws://localhost:8080/chat?username=" + username);
+  this.ws = new WebSocket("ws://" + SERVER_IP + "/chat?username=" + username);
   this.username = username;
   this.present = present || this.defaultPresent;
 

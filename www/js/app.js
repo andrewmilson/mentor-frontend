@@ -35,9 +35,12 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 .controller('homeController', function($scope, $http) {
   $scope.USER_ID = USER_ID;
 
-  var route = $scope.USER_ID < 4 ? '/mentors/' : '/mentees/';
+  var route = $scope.USER_ID <= 4 ? '/mentors/' : '/mentees/';
+
+  console.log(HOST + route + $scope.USER_ID)
   $http.get(HOST + route + $scope.USER_ID)
   .success(function(mentor) {
+    console.log(mentor, "dsakdsajkhdjsa")
     $scope.me = mentor.data;
   });
 })
@@ -46,8 +49,6 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
   $http.get(HOST + '/mentors/' + 3)
   .success(function(mentor) {
     $scope.mentor = mentor.data;
-
-    console.log($scope.mentor.talking_to);
 
     $scope.mentor.talking_to.forEach(function(mentorId, index) {
       $http.get(HOST + '/mentees/' + mentorId)
@@ -88,7 +89,7 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
     callback: function(data) {
       if (data === false) {
         // User wants to remain anonymous initially
-        
+
         return console.log('Cancelled');
       }
 
@@ -116,7 +117,9 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
     $scope.messages.push(d);
   });
 
-  $scope.sendMessage = function() {
+  $scope.sendMessage = function($event) {
+    $scope.message = "";
     $scope.user.sendMessage($scope.to.username, $scope.message);
+    $event.preventDefault();
   };
 });
