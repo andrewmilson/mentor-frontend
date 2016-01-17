@@ -36,7 +36,7 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
   $scope.USER_ID = USER_ID;
   $scope.PETER = PETER;
 
-  $http.get(HOST + '/mentors/' + USER_ID)
+  $http.get(HOST + (PETER ? '/mentors/' : '/mentees/') + USER_ID)
   .success(function(mentor) {
     console.log(mentor, "dsakdsajkhdjsa")
     $scope.me = mentor.data;
@@ -44,17 +44,21 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 })
 
 .controller('dashboardController', function($scope, $http) {
-  $http.get(HOST + '/mentors/' + USER_ID)
+  $http.get(HOST + (PETER ? '/mentors/' + USER_ID : '/mentors'))
   .success(function(mentor) {
-    $scope.mentor = mentor.data;
-    console.log($scope.mentor);
+    if (PETER) {
+      $scope.mentor = mentor.data;
+      console.log($scope.mentor);
 
-    $scope.mentor.talking_to.forEach(function(mentorId, index) {
-      $http.get(HOST + '/mentees/' + mentorId)
-      .success(function(mentee) {
-        $scope.mentor.talking_to[index] = mentee.data;
+      $scope.mentor.talking_to.forEach(function(mentorId, index) {
+        $http.get(HOST + '/mentees/' + mentorId)
+        .success(function(mentee) {
+          $scope.mentor.talking_to[index] = mentee.data;
+        })
       })
-    })
+    } else {
+      $scope.mentor = {talking_to: mentor.data};
+    }
   });
 })
 
@@ -93,6 +97,7 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
         }
 
         $scope.revealed = true;
+        $http.post(HOST + '/chat/messages?from=' + $scope.me.id + '&message=revealed')
         $scope.$apply();
 
         // User doesn't mind sharing their identity
@@ -108,6 +113,11 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
       if (!messages.data) return;
       messages.data.forEach(function(message) {
         console.log(message, USER_ID);
+        if (message.message == "revealed") {
+          $scope.revealed = true;
+          return;
+        }
+
         if (message.id == USER_ID) {
           message.mine = true;
           console.log("yee");

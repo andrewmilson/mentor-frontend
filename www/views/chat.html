@@ -11,7 +11,7 @@
       <span class="inner-message">
         <span ng-class="{anon: !revealed}">
           <!-- <strong>{{ !PETER ? m.mine ? me.first_name + me.last_name : "anon" : "anon") : IS_MENTOR ? to.first_name + ' ' + to.last_name : "anon" }}</strong><br /> -->
-          <strong>{{ (PETER && m.mine || revealed)  ? me.first_name + me.last_name : "anon" }} <br /></strong>
+          <strong>{{ !m.mine && !PETER || PETER && m.mine ? "Peter Thiel" : revealed ? "Harrison Shoebridge" : "anon"}} <br /></strong>
         </span>
         {{ m.message }}
       </span>

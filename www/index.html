@@ -29,8 +29,8 @@
     <script>
       window.SERVER_IP = 'localhost:8080'
       window.HOST = 'http://' + window.SERVER_IP;
-      window.USER_ID = 6;
-      window.PETER = false;
+      window.USER_ID = prompt('user?');
+      window.PETER = USER_ID == 3;
     </script>
   </head>
   <body ng-app="mentor">
