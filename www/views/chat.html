@@ -12,6 +12,13 @@
     </li>
   </ul>
 
-  <input type="text" ng-model="message">
-  <button ng-click="sendMessage();">Send</button>
+
+  <div class="message-bar">
+    <a href="#" class="reveal">
+      <span class="fa fa-user"></span>
+      Reveal identity
+    </a>
+    <input type="text" placeholder="Send a message">
+    <a href="" class="send" ng-click="sendMessage()"><span class="fa fa-send"></span></a>
+  </div>
 </div>

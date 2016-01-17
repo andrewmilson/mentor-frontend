@@ -1,5 +1,3 @@
-console.log('hey')
-
 angular.module('mentor', [
   'ngSanitize',
   'ui.router'
@@ -35,7 +33,7 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 }])
 
 .controller('homeController', function($scope, $http) {
-  $scope.USER_ID = parseInt(prompt("What ID would you like to use?"));
+  $scope.USER_ID = USER_ID;
 
   var route = $scope.USER_ID < 4 ? '/mentors/' : '/mentees/';
   $http.get(HOST + route + $scope.USER_ID)
