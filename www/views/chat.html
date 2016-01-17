@@ -8,7 +8,11 @@
 <div>
   <ul>
     <li ng-repeat="m in messages" ng-class="{mine: m.id == USER_ID}">
-      {{ m.username }}: {{ m.message }}
+      {{ m.first_name }} {{ m.last_name }}: {{ m.messsage }}
+    </li>
+
+    <li>
+
     </li>
   </ul>
 
