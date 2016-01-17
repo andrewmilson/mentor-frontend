@@ -24,6 +24,8 @@ User.prototype.sendMessage = function(to, message) {
 
   this.ws.send(JSON.stringify(msg));
 
+  msg.username = this.username;
+
   return msg;
 };
 
