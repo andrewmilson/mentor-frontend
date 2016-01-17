@@ -1,14 +1,20 @@
 <nav>
   <ul>
     <li class="nav-right"><a href="/#/"><i class="fa fa-angle-left"></i></a></li>
-    <li><a href="">Chat with {{ to.first_name }}</a></li>
+    <li><a href="">Chat with {{ me.first_name }}</a></li>
   </ul>
 </nav>
 
 <div>
-  <ul>
-    <li ng-repeat="m in messages" ng-class="{mine: m.id == USER_ID}">
-      {{ m.first_name }} {{ m.last_name }}: {{ m.messsage }}
+  <ul class="messages">
+    <li ng-repeat="m in messages" ng-class="{mine: m.mine}">
+      <span class="inner-message">
+        <span ng-class="{anon: !revealed}">
+          <!-- <strong>{{ !PETER ? m.mine ? me.first_name + me.last_name : "anon" : "anon") : IS_MENTOR ? to.first_name + ' ' + to.last_name : "anon" }}</strong><br /> -->
+          <strong>{{ (PETER && m.mine || revealed)  ? me.first_name + me.last_name : "anon" }} <br /></strong>
+        </span>
+        {{ m.message }}
+      </span>
     </li>
 
     <li>
@@ -18,7 +24,7 @@
 
 
   <div class="message-bar">
-    <a ng-click="revealIdentity()" class="reveal">
+    <a ng-click="revealIdentity()" ng-hide="revealed || PETER" class="reveal">
       <span class="fa fa-user"></span>
       Reveal identity
     </a>

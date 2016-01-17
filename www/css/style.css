@@ -174,3 +174,35 @@ nav ul li a {
   top: 100%;
   margin-top: 0;
 }
+
+.messages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding: 0.5em;
+}
+
+.messages li {
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.anon {
+  opacity: 0.5;
+}
+
+.messages li.mine {
+  text-align: right;
+}
+
+.messages li.mine span {
+  background: #6CC470;
+  color: #fff;
+}
+
+.inner-message {
+  display: inline-block;
+  padding: 0.5em;
+  background: #ccc;
+}

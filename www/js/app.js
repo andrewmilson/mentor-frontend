@@ -34,11 +34,9 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 
 .controller('homeController', function($scope, $http) {
   $scope.USER_ID = USER_ID;
+  $scope.PETER = PETER;
 
-  var route = $scope.USER_ID <= 4 ? '/mentors/' : '/mentees/';
-
-  console.log(HOST + route + $scope.USER_ID)
-  $http.get(HOST + route + $scope.USER_ID)
+  $http.get(HOST + '/mentors/' + USER_ID)
   .success(function(mentor) {
     console.log(mentor, "dsakdsajkhdjsa")
     $scope.me = mentor.data;
@@ -46,9 +44,10 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 })
 
 .controller('dashboardController', function($scope, $http) {
-  $http.get(HOST + '/mentors/' + 3)
+  $http.get(HOST + '/mentors/' + USER_ID)
   .success(function(mentor) {
     $scope.mentor = mentor.data;
+    console.log($scope.mentor);
 
     $scope.mentor.talking_to.forEach(function(mentorId, index) {
       $http.get(HOST + '/mentees/' + mentorId)
@@ -60,8 +59,7 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
 })
 
 .controller('bioController', function($scope, $http) {
-  var route = $scope.USER_ID < 4 ? '/mentors/' : '/mentees/';
-  $http.get(HOST + route + $scope.USER_ID)
+  $http.get(HOST + '/mentors/' + $scope.USER_ID)
   .success(function(mentor) {
     console.log(mentor)
     $scope.mentor = mentor.data;
@@ -76,10 +74,53 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
   })
 })
 
-.controller('chatController', function($scope, $http, $stateParams) {
+.controller('chatController', function($scope, $http, $stateParams, $interval) {
   $scope.revealIdentity = function() {
     vex.dialog.open({
       message: 'You are about to reveal your identity! Are you sure you want to do this?',
+      buttons: [
+        $.extend({}, vex.dialog.buttons.YES, {
+          text: 'Yes!'
+        }), $.extend({}, vex.dialog.buttons.NO, {
+          text: 'No.'
+        })
+      ],
+      callback: function(data) {
+        if (data === false) {
+          // User wants to remain anonymous initially
+
+          return console.log('Cancelled');
+        }
+
+        $scope.revealed = true;
+        $scope.$apply();
+
+        // User doesn't mind sharing their identity
+        return;
+      }
+    });
+  }
+
+  $interval(function() {
+    $http.get(HOST + '/chat/messages')
+    .success(function(messages) {
+      console.log(messages);
+      if (!messages.data) return;
+      messages.data.forEach(function(message) {
+        console.log(message, USER_ID);
+        if (message.id == USER_ID) {
+          message.mine = true;
+          console.log("yee");
+        }
+      });
+
+      $scope.messages = messages.data
+    });
+  }, 100);
+
+  if (!PETER) {
+    vex.dialog.open({
+      message: 'Do you want to reveal your identity now?',
       buttons: [
         $.extend({}, vex.dialog.buttons.YES, {
           text: 'Yes!'
@@ -102,27 +143,6 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
     });
   }
 
-  vex.dialog.open({
-    message: 'Do you want to reveal your identity now?',
-    buttons: [
-      $.extend({}, vex.dialog.buttons.YES, {
-        text: 'Yes!'
-      }), $.extend({}, vex.dialog.buttons.NO, {
-        text: 'No.'
-      })
-    ],
-    callback: function(data) {
-      if (data === false) {
-        // User wants to remain anonymous initially
-
-        return console.log('Cancelled');
-      }
-
-      // User doesn't mind sharing their identity
-      return;
-    }
-  });
-
   $scope.muted = true;
   $scope.messages = [];
 
@@ -136,18 +156,10 @@ function($stateProvider, $urlRouterProvider, $compileProvider) {
       $scope.to = mentor.data;
     });
 
-  console.log($scope.me.username);
-  $scope.user = new User($scope.me.username, function(d) {
-    console.log(d);
-    console.log("NEW MESSAGE!");
-    $scope.messages.push(d);
-  });
-
   $scope.sendMessage = function($event) {
-    $scope.messages.push($scope.user.sendMessage($scope.to.username, $scope.message));
-    console.log($scope.messages);
-    $scope.message = "";
 
+    $http.post(HOST + '/chat/messages?from=' + $scope.me.id + '&message=' + $scope.message)
+    $scope.message = "";
     $event.preventDefault();
   };
 });
